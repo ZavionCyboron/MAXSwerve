@@ -61,8 +61,8 @@ object Constants {
     object LauncherConstants {
         val LAUNCHER_MAX_SPEED = MetersPerSecond.of(4.8)
 
-        val launcherMotor = SparkMax(9, MotorType.kBrushless)
-        val launcherFollowerMotor = SparkMax(10, MotorType.kBrushless)
+        //val launcherMotor = SparkMax(9, MotorType.kBrushless)
+        //val launcherFollowerMotor = SparkMax(10, MotorType.kBrushless)
     }
 
 
