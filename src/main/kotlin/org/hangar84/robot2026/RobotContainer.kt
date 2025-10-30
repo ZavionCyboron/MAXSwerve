@@ -24,7 +24,7 @@ object RobotContainer {
     init {
         configureBindings()
 
-        AutoBuilder.configure(
+        /*AutoBuilder.configure(
             // poseSupplier =
             { DriveSubsystem.poseEstimator.estimatedPosition },
             // resetPose =
@@ -55,7 +55,7 @@ object RobotContainer {
         )
 
         autoChooser = AutoBuilder.buildAutoChooser()
-        SmartDashboard.putData("Autonomous Routine", autoChooser)
+        SmartDashboard.putData("Autonomous Routine", autoChooser)*/
     }
 
     private fun configureBindings() {
