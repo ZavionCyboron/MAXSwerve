@@ -7,13 +7,16 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.util.WPILibVersion
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
+import org.hangar84.robot2026.subsystems.DriveSubsystem
 
 object Robot : TimedRobot() {
     private var autonomousCommand: Command? = null
+    private val robotDrive = DriveSubsystem()
 
     override fun robotInit() {
         HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin, 0, WPILibVersion.Version)
-
+        robotDrive.resetEncoders()
+        robotDrive.zeroHeading()
         RobotContainer
     }
 
@@ -28,7 +31,6 @@ object Robot : TimedRobot() {
     }
 
     override fun autonomousInit() {
-        RobotContainer.autonomousCommand?.schedule()
     }
 
     override fun autonomousPeriodic() {

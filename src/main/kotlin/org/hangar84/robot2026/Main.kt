@@ -1,7 +1,6 @@
 package org.hangar84.robot2026
 
 import edu.wpi.first.wpilibj.RobotBase
-import java.util.function.Supplier
 
 /**
  * Do NOT add any static variables to this class, or any initialization at all. Unless you know what
@@ -16,6 +15,6 @@ object Main {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        RobotBase.startRobot(Supplier { org.hangar84.robot2026.Robot })
+        RobotBase.startRobot { Robot }
     }
 }
