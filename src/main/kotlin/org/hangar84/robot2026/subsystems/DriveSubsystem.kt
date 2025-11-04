@@ -42,7 +42,7 @@ class DriveSubsystem : SubsystemBase() {
 
     // Odometry class for tracking robot pose
     var odometry: SwerveDriveOdometry = SwerveDriveOdometry(
-        DriveConstants.kDriveKinematics,
+        DriveConstants.DriveKinematics,
         Rotation2d.fromDegrees(gyro.getAngle(IMUAxis.kZ)),
         arrayOf<SwerveModulePosition?>(
             frontLeft.position,
@@ -112,7 +112,7 @@ class DriveSubsystem : SubsystemBase() {
         val ySpeedDelivered = ySpeed * DriveConstants.MaxSpeedMetersPerSecond
         val rotDelivered = rot * DriveConstants.MaxAngularSpeed
 
-        val swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
+        val swerveModuleStates = DriveConstants.DriveKinematics.toSwerveModuleStates(
             if (fieldRelative)
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                     xSpeedDelivered, ySpeedDelivered, rotDelivered,
