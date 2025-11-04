@@ -14,10 +14,10 @@ class Configs {
 
         init {
             // Use module constants to calculate conversion factors and feed forward gain.
-            val drivingFactor = (ModuleConstants.kWheelDiameterMeters * Math.PI
-                    / ModuleConstants.kDrivingMotorReduction)
+            val drivingFactor = (ModuleConstants.WheelDiameterMeters * Math.PI
+                    / ModuleConstants.DrivingMotorReduction)
             val turningFactor = 2 * Math.PI
-            val drivingVelocityFeedForward = 1 / ModuleConstants.kDriveWheelFreeSpeedRps
+            val drivingVelocityFeedForward = 1 / ModuleConstants.DriveWheelFreeSpeedRps
 
             drivingConfig
                 .idleMode(IdleMode.kBrake)
