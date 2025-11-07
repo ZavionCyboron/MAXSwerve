@@ -14,11 +14,11 @@ class MAXSwerveModule(drivingCANId: Int, turningCANId: Int, chassisAngularOffset
     private val drivingSpark: SparkMax = SparkMax(drivingCANId, SparkLowLevel.MotorType.kBrushless)
     private val turningSpark: SparkMax = SparkMax(turningCANId, SparkLowLevel.MotorType.kBrushless)
 
-    private val drivingEncoder: RelativeEncoder = drivingSpark.getEncoder()
-    private val turningEncoder = turningSpark.getAbsoluteEncoder()
+    private val drivingEncoder: RelativeEncoder = drivingSpark.encoder
+    private val turningEncoder = turningSpark.absoluteEncoder
 
-    private val drivingClosedLoopController: SparkClosedLoopController = drivingSpark.getClosedLoopController()
-    private val turningClosedLoopController: SparkClosedLoopController = turningSpark.getClosedLoopController()
+    private val drivingClosedLoopController: SparkClosedLoopController = drivingSpark.closedLoopController
+    private val turningClosedLoopController: SparkClosedLoopController = turningSpark.closedLoopController
 
     private var chassisAngularOffset = 0.0
     private var desiredState = SwerveModuleState(0.0, Rotation2d())
@@ -43,7 +43,7 @@ class MAXSwerveModule(drivingCANId: Int, turningCANId: Int, chassisAngularOffset
             SparkBase.PersistMode.kPersistParameters
         )
         this.chassisAngularOffset = chassisAngularOffset
-        desiredState.angle = Rotation2d(turningEncoder.getPosition())
+        desiredState.angle = Rotation2d(turningEncoder.position)
         drivingEncoder.position = 0.0
     }
 
@@ -72,7 +72,7 @@ class MAXSwerveModule(drivingCANId: Int, turningCANId: Int, chassisAngularOffset
         correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(chassisAngularOffset))
 
         // Optimize the reference state to avoid spinning further than 90 degrees.
-        correctedDesiredState.optimize(Rotation2d(turningEncoder.getPosition()))
+        correctedDesiredState.optimize(Rotation2d(turningEncoder.position))
 
         // Command driving and turning SPARKS towards their respective setpoints.
         drivingClosedLoopController.setReference(correctedDesiredState.speedMetersPerSecond, SparkBase.ControlType.kVelocity)

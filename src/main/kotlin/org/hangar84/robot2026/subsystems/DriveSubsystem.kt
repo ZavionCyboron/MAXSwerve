@@ -77,7 +77,7 @@ class DriveSubsystem : SubsystemBase() {
          *
          * @return The pose.
          */
-        get() = odometry.getPoseMeters()
+        get() = odometry.poseMeters
 
     /**
      * Resets the odometry to the specified pose.
@@ -182,5 +182,5 @@ class DriveSubsystem : SubsystemBase() {
          *
          * @return The turn rate of the robot, in degrees per second
          */
-        get() = gyro.getRate(IMUAxis.kZ) * (if (DriveConstants.GyroReversed) -1.0 else 1.0)
+        get() = gyro.getRate(IMUAxis.kZ) * (1.0)
 }
