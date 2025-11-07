@@ -23,13 +23,13 @@ class Constants {
         // Driving Parameters - Note that these are not the maximum capable speeds of
         // the robot, rather the allowed maximum speeds
         const val MaxSpeedMetersPerSecond: Double = 4.8
-        val MaxAngularSpeed: Double = 2 * Math.PI // radians per second
+        const val MaxAngularSpeed: Double = 2 * Math.PI // radians per second
 
         // Chassis configuration
-        val TrackWidth: Double = Units.inchesToMeters(26.5)
+        val TrackWidth: Double = Units.inchesToMeters(20.0)
 
         // Distance between centers of right and left wheels on robot
-        val WheelBase: Double = Units.inchesToMeters(26.5)
+        val WheelBase: Double = Units.inchesToMeters(25.0)
 
         // Distance between front and back wheels on robot
         val DriveKinematics: SwerveDriveKinematics = SwerveDriveKinematics(
@@ -40,21 +40,21 @@ class Constants {
         )
 
         // Angular offsets of the modules relative to the chassis in radians
-        val FrontLeftChassisAngularOffset: Double = -Math.PI / 2
+        const val FrontLeftChassisAngularOffset: Double = -Math.PI / 2
         const val FrontRightChassisAngularOffset: Double = 0.0
-        val BackLeftChassisAngularOffset: Double = Math.PI
-        val BackRightChassisAngularOffset: Double = Math.PI / 2
+        const val BackLeftChassisAngularOffset: Double = Math.PI
+        const val BackRightChassisAngularOffset: Double = Math.PI / 2
 
         // SPARK MAX CAN IDs
-        const val FrontLeftDrivingCanId: Int = 11
-        const val RearLeftDrivingCanId: Int = 13
-        const val FrontRightDrivingCanId: Int = 15
-        const val RearRightDrivingCanId: Int = 17
+        const val FrontLeftDrivingCanId: Int = 4
+        const val RearLeftDrivingCanId: Int = 8
+        const val FrontRightDrivingCanId: Int = 1
+        const val RearRightDrivingCanId: Int = 5
 
-        const val FrontLeftTurningCanId: Int = 10
-        const val RearLeftTurningCanId: Int = 12
-        const val FrontRightTurningCanId: Int = 14
-        const val RearRightTurningCanId: Int = 16
+        const val FrontLeftTurningCanId: Int = 3
+        const val RearLeftTurningCanId: Int = 7
+        const val FrontRightTurningCanId: Int = 2
+        const val RearRightTurningCanId: Int = 6
 
         const val GyroReversed: Boolean = false
     }
@@ -63,16 +63,16 @@ class Constants {
         // The MAXSwerve module can be configured with one of three pinion gears: 12T,
         // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
         // more teeth will result in a robot that drives faster).
-        const val DrivingMotorPinionTeeth: Int = 14
+        const val DrivingMotorPinionTeeth: Int = 12
 
         // Calculations required for driving motor conversion factors and feed forward
-        val DrivingMotorFreeSpeedRps: Double = NeoMotorConstants.FreeSpeedRpm / 60
+        const val DrivingMotorFreeSpeedRps: Double = NeoMotorConstants.FreeSpeedRpm / 60
         const val WheelDiameterMeters: Double = 0.0762
-        val WheelCircumferenceMeters: Double = WheelDiameterMeters * Math.PI
+        const val WheelCircumferenceMeters: Double = WheelDiameterMeters * Math.PI
 
         // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
         // teeth on the bevel pinion
-        val DrivingMotorReduction: Double = (45.0 * 22) / (DrivingMotorPinionTeeth * 15)
+        const val DrivingMotorReduction: Double = (45.0 * 22) / (DrivingMotorPinionTeeth * 15)
         val DriveWheelFreeSpeedRps: Double = ((DrivingMotorFreeSpeedRps * WheelCircumferenceMeters)
                 / DrivingMotorReduction)
     }
@@ -85,8 +85,8 @@ class Constants {
     object AutoConstants {
         const val MaxSpeedMetersPerSecond: Double = 3.0
         const val MaxAccelerationMetersPerSecondSquared: Double = 3.0
-        val MaxAngularSpeedRadiansPerSecond: Double = Math.PI
-        val MaxAngularSpeedRadiansPerSecondSquared: Double = Math.PI
+        const val MaxAngularSpeedRadiansPerSecond: Double = Math.PI
+        const val MaxAngularSpeedRadiansPerSecondSquared: Double = Math.PI
 
         const val PXController: Double = 1.0
         const val PYController: Double = 1.0
