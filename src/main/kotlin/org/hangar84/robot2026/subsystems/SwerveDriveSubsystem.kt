@@ -9,11 +9,7 @@ import edu.wpi.first.math.VecBuilder
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.*
 import edu.wpi.first.math.kinematics.*
-import edu.wpi.first.math.util.Units
-import edu.wpi.first.units.Units.Degrees
-import edu.wpi.first.units.Units.Inches
-import edu.wpi.first.units.Units.MetersPerSecond
-import edu.wpi.first.units.Units.RotationsPerSecond
+import edu.wpi.first.units.Units.*
 import edu.wpi.first.wpilibj.ADIS16470_IMU
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis
 import edu.wpi.first.wpilibj2.command.Command
@@ -25,14 +21,14 @@ import org.photonvision.PhotonCamera
 import org.photonvision.PhotonPoseEstimator
 
 
-object DriveSubsystem : SubsystemBase() {
+object SwerveDriveSubsystem : SubsystemBase() {
     // Constants
 
     private val MAX_SPEED = MetersPerSecond.of(4.8)
     private val MAX_ANGULAR_SPEED = RotationsPerSecond.of(1.0)
     private val WHEEL_BASE = Inches.of(24.0)
     private val TRACK_WIDTH = Inches.of(24.5)
-    
+
     // Create MAXSwerveModules
     private val frontLeft: MAXSwerveModule = MAXSwerveModule(
         4,
