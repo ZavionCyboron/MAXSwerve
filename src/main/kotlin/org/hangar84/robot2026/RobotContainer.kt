@@ -12,6 +12,12 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.InstantCommand
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import org.hangar84.robot2026.subsystems.SwerveDriveSubsystem
+import org.hangar84.robot2026.subsystems.SwerveDriveSubsystem.MAX_SPEED
+import org.hangar84.robot2026.subsystems.SwerveDriveSubsystem.MAX_ANGULAR_SPEED
+import org.hangar84.robot2026.subsystems.SwerveDriveSubsystem.park
+import org.hangar84.robot2026.subsystems.SwerveDriveSubsystem.driveControlled
+import edu.wpi.first.units.Units.MetersPerSecond
+import edu.wpi.first.units.Units.RadiansPerSecond
 
 
 /*
@@ -22,7 +28,7 @@ import org.hangar84.robot2026.subsystems.SwerveDriveSubsystem
 */
 object RobotContainer {
 
-    private const val DriveDeadband: Double = 0.05
+    private const val DriveDeadband: Double = .05
 
     // The driver's controller
     private val controller: CommandXboxController = CommandXboxController(0)
@@ -71,14 +77,20 @@ object RobotContainer {
 
     private fun configureBindings() {
         SwerveDriveSubsystem.defaultCommand =
-            SwerveDriveSubsystem.driveControlled(
-                throttleX = -MathUtil.applyDeadband(controller.leftY, DriveDeadband),
-                throttleY = -MathUtil.applyDeadband(controller.leftX, DriveDeadband),
-                throttleAngular = -MathUtil.applyDeadband(controller.rightX, DriveDeadband),
-                fieldRelative = true,
-            )
+            SwerveDriveSubsystem.run {
+                val x: Double = MathUtil.applyDeadband(-controller.leftY, DriveDeadband)
+                val y: Double = MathUtil.applyDeadband(-controller.leftX, DriveDeadband)
+                val rot: Double = MathUtil.applyDeadband(controller.rightX, DriveDeadband)
+
+                driveControlled(
+                    x * MAX_SPEED.`in`(MetersPerSecond),
+                    y * MAX_SPEED.`in`(MetersPerSecond),
+                    rot * MAX_ANGULAR_SPEED.`in`(RadiansPerSecond),
+                    true
+                )
+            }
 
         // Park on left bumper
-        controller.leftBumper().whileTrue(SwerveDriveSubsystem.park())
+        controller.leftBumper().whileTrue(park())
     }
 }

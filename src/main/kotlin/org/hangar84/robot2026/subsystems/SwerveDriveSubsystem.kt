@@ -24,15 +24,15 @@ import org.photonvision.PhotonPoseEstimator
 object SwerveDriveSubsystem : SubsystemBase() {
     // Constants
 
-    private val MAX_SPEED = MetersPerSecond.of(4.8)
-    private val MAX_ANGULAR_SPEED = RotationsPerSecond.of(1.0)
+    internal val MAX_SPEED = MetersPerSecond.of(4.8)
+    internal val MAX_ANGULAR_SPEED = RotationsPerSecond.of(1.0)
     private val WHEEL_BASE = Inches.of(24.0)
     private val TRACK_WIDTH = Inches.of(24.5)
 
     // Create MAXSwerveModules
     private val frontLeft: MAXSwerveModule = MAXSwerveModule(
-        4,
         3,
+        4,
         Degrees.of(270.0),
         SwerveConfigs.drivingConfig,
         SwerveConfigs.turningConfig
@@ -47,9 +47,9 @@ object SwerveDriveSubsystem : SubsystemBase() {
     )
 
     private val rearLeft: MAXSwerveModule = MAXSwerveModule(
-        8,
         7,
-        Degrees.of(18.0),
+        8,
+        Degrees.of(180.0),
         SwerveConfigs.drivingConfig,
         SwerveConfigs.turningConfig
     )
@@ -144,29 +144,26 @@ object SwerveDriveSubsystem : SubsystemBase() {
     // -- Commands --
 
     fun driveControlled(
-        throttleX: Double,
-        throttleY: Double,
-        throttleAngular: Double,
+        speedX: Double,
+        speedY: Double,
+        rot: Double,
         fieldRelative: Boolean,
-    ): Command =
-        this.run {
-            val speedX = MAX_SPEED * throttleX
-            val speedY = MAX_SPEED * throttleY
-            val speedAngular = MAX_ANGULAR_SPEED * throttleAngular
-
-            val swerveStates =
-                kinematics.toSwerveModuleStates(
-                    if (fieldRelative) {
-                        ChassisSpeeds.fromFieldRelativeSpeeds(speedX, speedY, speedAngular, rotation)
-                    } else {
-                        ChassisSpeeds(speedX, speedY, speedAngular)
-                    },
+    ){
+        val chassisSpeeds =
+            if (fieldRelative)
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                    speedX, speedY, rot, rotation
                 )
+        else
+                ChassisSpeeds(speedX,speedY,rot)
 
-            SwerveDriveKinematics.desaturateWheelSpeeds(swerveStates, MAX_SPEED)
+        val swerveStates = kinematics.toSwerveModuleStates(chassisSpeeds)
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveStates, MAX_SPEED.`in`(MetersPerSecond))
 
-            allModules.forEachIndexed { i, module -> module.desiredState = swerveStates[i] }
+        allModules.forEachIndexed { i, module ->
+            module.desiredState = swerveStates[i]
         }
+    }
 
     fun driveRelative(chassisSpeeds: ChassisSpeeds) {
         val desiredStates = kinematics.toSwerveModuleStates(chassisSpeeds)
